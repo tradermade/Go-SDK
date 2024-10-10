@@ -1,4 +1,4 @@
-module example.com/Go-SDK
+module github.com/tradermade/Go-SDK
 
 go 1.21.1
 
