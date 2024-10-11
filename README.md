@@ -148,7 +148,87 @@ All methods return an error as the second return value. Always check this error 
 
 ## API Documentation
 
-For more details on the TraderMade API, please refer to the [official API documentation](https://tradermade.com/docs/resful-api).
+For more details on the TraderMade REST API, please refer to the [official API documentation](https://tradermade.com/docs/resful-api).
+
+
+# TraderMade WebSocket Client Example
+
+This project demonstrates how to use the TraderMade WebSocket API to receive real-time forex, crypto and cfd quotes using Go.
+
+
+
+## Usage
+
+Import the WebSocket client package to get started.
+
+```go
+import (
+    tradermadews "github.com/tradermade/Go-SDK/websocket"
+)
+```
+
+Next, create a new client with your WebSocket API key and currency pairs.
+
+```go
+// Initialize the WebSocket client with your API key
+client := tradermadews.NewWebSocketClient("YOUR_WS_KEY", "EURUSD,GBPUSD,XAUUSD")
+
+// Set custom retry settings
+client.MaxRetries = 10                 // Set maximum number of retries
+client.RetryInterval = 5 * time.Second // Set retry interval
+
+// Enable automatic reconnection
+client.EnableAutoReconnect(true)
+
+// Connect to the TraderMade WebSocket
+err := client.Connect()
+if err != nil {
+    log.Fatal(err)
+}
+defer client.Disconnect() // Ensure to disconnect when done
+```
+
+The client automatically reconnects to the server when the connection is dropped. When the client successfully reconnects, it automatically resubscribes to the currency pairs that were set during initialization.
+
+### Using the client
+
+After creating a client, set up handlers for different events and start receiving data.
+
+```go
+// Set a handler for the "Connected" message
+client.SetConnectedHandler(func(connectedMsg tradermadews.ConnectedMessage) {
+    fmt.Printf("WebSocket connected: %s\n", connectedMsg.Message)
+})
+
+// Set a message handler to process received quotes
+client.SetMessageHandler(func(quote tradermadews.QuoteMessage, humanTimestamp string) {
+    fmt.Printf("Received quote: Symbol=%s Bid=%.5f Ask=%.5f Timestamp=%s (Human-readable: %s)\n",
+        quote.Symbol, quote.Bid, quote.Ask, quote.Ts, humanTimestamp)
+})
+
+// Set a handler to notify reconnection attempts
+client.SetReconnectionHandler(func(attempt int) {
+    fmt.Printf("Reconnecting... (Attempt %d)\n", attempt)
+})
+
+// Handle graceful shutdown (Ctrl+C)
+c := make(chan os.Signal, 1)
+signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+<-c
+
+fmt.Println("Shutting down WebSocket client...")
+```
+
+
+
+For the [Full example code](https://github.com/tradermade/Go-SDK/blob/main/examples/ws_main.go)
+the puts it all together.
+
+## Websocket Documentation
+
+For more details on the TraderMade API, please refer to the [official API documentation](https://tradermade.com/docs/streaming-data-api).
+
+
 
 ## Support
 
