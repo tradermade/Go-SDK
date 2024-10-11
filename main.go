@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	tradermade "github.com.com/tradermade/Go-SDK/rest"
+	tradermade "github.com/tradermade/Go-SDK/rest"
 )
 
 func main() {

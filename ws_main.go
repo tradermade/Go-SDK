@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"time"
 
-	tradermadews "github.com.com/tradermade/Go-SDK/websocket"
+	tradermadews "github.com/tradermade/Go-SDK/websocket"
 )
 
 func main() {
