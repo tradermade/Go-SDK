@@ -5,13 +5,13 @@ import (
 	"log"
 	"time"
 
-	tradermade "github.com/Go-SDK/rest"
+	tradermade "github.com.com/tradermade/Go-SDK/rest"
 )
 
 func main() {
 	// Initialize the REST client with your API key
 
-	client := tradermade.NewRESTClient("add_api_key")
+	client := tradermade.NewRESTClient("api_key")
 
 	//Fetch live rates for the specified currency pairs
 	currencyPairs := []string{"EURUSD", "GBPUSD", "USDJPY"}
@@ -85,30 +85,30 @@ func main() {
 			quote.Date, quote.Open, quote.High, quote.Low, quote.Close)
 	}
 
-	// Example for hourly data (period required)
-	// timeSeriesDataHourly, err := client.GetTimeSeriesData("EURUSD", "2024-10-01 10:00", "2024-10-02-11:00", "hourly", 4)
-	// if err != nil {
-	// 	log.Fatalf("Error fetching hourly time series data: %v", err)
-	// }
+	//Example for hourly data (period required)
+	timeSeriesDataHourly, err := client.GetTimeSeriesData("EURUSD", "2024-10-01 10:00", "2024-10-02-11:00", "hourly", 4)
+	if err != nil {
+		log.Fatalf("Error fetching hourly time series data: %v", err)
+	}
 
-	// fmt.Printf("Time Series Data (Hourly) from %s to %s:\n",
-	// 	timeSeriesDataHourly.StartDate, timeSeriesDataHourly.EndDate)
-	// for _, quote := range timeSeriesDataHourly.Quotes {
-	// 	fmt.Printf("Date: %s, Open: %f, High: %f, Low: %f, Close: %f\n",
-	// 		quote.Date, quote.Open, quote.High, quote.Low, quote.Close)
-	// }
-	// // Example for minute data (period required)
-	// timeSeriesDataMinute, err := client.GetTimeSeriesData("EURUSD", "2024-10-02", "2024-10-02-23:59", "minute", 15)
-	// if err != nil {
-	// 	log.Fatalf("Error fetching minute time series data: %v", err)
-	// }
+	fmt.Printf("Time Series Data (Hourly) from %s to %s:\n",
+		timeSeriesDataHourly.StartDate, timeSeriesDataHourly.EndDate)
+	for _, quote := range timeSeriesDataHourly.Quotes {
+		fmt.Printf("Date: %s, Open: %f, High: %f, Low: %f, Close: %f\n",
+			quote.Date, quote.Open, quote.High, quote.Low, quote.Close)
+	}
+	// Example for minute data (period required)
+	timeSeriesDataMinute, err := client.GetTimeSeriesData("EURUSD", "2024-10-02", "2024-10-02-23:59", "minute", 15)
+	if err != nil {
+		log.Fatalf("Error fetching minute time series data: %v", err)
+	}
 
-	// fmt.Printf("Time Series Data (Minute) from %s to %s:\n",
-	// 	timeSeriesDataMinute.StartDate, timeSeriesDataMinute.EndDate)
+	fmt.Printf("Time Series Data (Minute) from %s to %s:\n",
+		timeSeriesDataMinute.StartDate, timeSeriesDataMinute.EndDate)
 
-	// for _, quote := range timeSeriesDataMinute.Quotes {
-	// 	fmt.Printf("Date: %s, Open: %f, High: %f, Low: %f, Close: %f\n",
-	// 		quote.Date, quote.Open, quote.High, quote.Low, quote.Close)
-	// }
+	for _, quote := range timeSeriesDataMinute.Quotes {
+		fmt.Printf("Date: %s, Open: %f, High: %f, Low: %f, Close: %f\n",
+			quote.Date, quote.Open, quote.High, quote.Low, quote.Close)
+	}
 
 }
