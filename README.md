@@ -148,12 +148,10 @@ All methods return an error as the second return value. Always check this error 
 
 ## API Documentation
 
-For more details on the TraderMade API, please refer to the [official API documentation](https://tradermade.com/docs/api-documentation).
+For more details on the TraderMade API, please refer to the [official API documentation](https://tradermade.com/docs/resful-api).
 
 ## Support
 
 If you encounter any issues or have questions, please open an issue on the [GitHub repository](https://github.com/tradermade/Go-SDK) or contact TraderMade support.
 
-## License
 
-[Include your license information here]
